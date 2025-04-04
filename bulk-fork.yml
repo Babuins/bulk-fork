@@ -1,0 +1,21 @@
+name: Bulk Fork Repositories
+
+on: [workflow_dispatch]
+
+jobs:
+  bulk-fork:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Fork Repositories
+        run: |
+          REPOS=("302ai/302_image_toolbox" "302ai/302_video_generator" "302ai/302_tts") # Вставте ваш список репозиторіїв
+          for REPO in "${REPOS[@]}"
+          do
+            gh repo fork $REPO --clone=false
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}

@@ -18,7 +18,7 @@ jobs:
             gh repo clone $REPO temp-repo
             cd temp-repo
             mkdir -p .github/workflows
-            cat << 'EOF' > .github/workflows/deploy-to-firebase.yml
+            cat << EOF > .github/workflows/deploy-to-firebase.yml
 name: Deploy to Firebase
 
 on:
@@ -46,7 +46,10 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase
-        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} EOF
+        run: firebase deploy --token "\${{ secrets.FIREBASE_TOKEN }}"
+EOF
+            git config user.email "actions@github.com"
+            git config user.name "GitHub Actions"
             git add .github/workflows/deploy-to-firebase.yml
             git commit -m "Add deploy to Firebase workflow"
             git push origin main
@@ -54,4 +57,4 @@ jobs:
             rm -rf temp-repo
           done
         env:
-          PERSONAL_TOKEN: ${{ secrets.TOKEN }}
+          GH_TOKEN: ${{ secrets.TOKEN }} # Змінено PERSONAL_TOKEN на GH_TOKEN

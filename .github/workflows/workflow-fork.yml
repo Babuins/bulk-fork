@@ -46,7 +46,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase
-        run: firebase deploy --token "\${{ secrets.FIREBASE_TOKEN }}"
+        run: firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}"
 EOF
             git config user.email "actions@github.com"
             git config user.name "GitHub Actions"
@@ -57,4 +57,4 @@ EOF
             rm -rf temp-repo
           done
         env:
-          GH_TOKEN: ${{ secrets.TOKEN }} 
+          GH_TOKEN: ${{ secrets.TOKEN }}

@@ -57,4 +57,4 @@ EOF
             rm -rf temp-repo
           done
         env:
-          GH_TOKEN: ${{ secrets.TOKEN }} # Змінено PERSONAL_TOKEN на GH_TOKEN
+          GH_TOKEN: ${{ secrets.TOKEN }} 

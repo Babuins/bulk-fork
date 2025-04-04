@@ -12,42 +12,42 @@ jobs:
 
       - name: Add Workflow to Forks
         run: |
-          REPOS=("302ai/302_image_toolbox" "302ai/302_video_generator" "302ai/302_tts") # Вставте ваш список репозиторіїв
+          REPOS=("302ai/302_image_toolbox" "302ai/302_video_generator" "302ai/302_tts") # Вставте ваш список форкованих репозиторіїв
           for REPO in "${REPOS[@]}"
           do
             gh repo clone $REPO temp-repo
             cd temp-repo
             mkdir -p .github/workflows
-            cat << EOF > .github/workflows/deploy-to-firebase.yml
-            name: Deploy to Firebase
+            cat << 'EOF' > .github/workflows/deploy-to-firebase.yml
+name: Deploy to Firebase
 
-            on:
-              push:
-                branches:
-                  - main
+on:
+  push:
+    branches:
+      - main
 
-            jobs:
-              build-and-deploy:
-                runs-on: ubuntu-latest
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-                steps:
-                  - name: Checkout code
-                    uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-                  - name: Setup Node.js
-                    uses: actions/setup-node@v2
-                    with:
-                      node-version: '14'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-                  - name: Install dependencies
-                    run: npm install
+      - name: Install dependencies
+        run: npm install
 
-                  - name: Build project
-                    run: npm run build
+      - name: Build project
+        run: npm run build
 
-                  - name: Deploy to Firebase
-                    run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
-            EOF
+      - name: Deploy to Firebase
+        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
+EOF
             git add .github/workflows/deploy-to-firebase.yml
             git commit -m "Add deploy to Firebase workflow"
             git push origin main
@@ -55,4 +55,4 @@ jobs:
             rm -rf temp-repo
           done
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+          PERSONAL_TOKEN: ${{ secrets.TOKEN }}

@@ -46,8 +46,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase
-        run: firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}"
-EOF
+        run: firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}" EOF
             git config user.email "actions@github.com"
             git config user.name "GitHub Actions"
             git add .github/workflows/deploy-to-firebase.yml
